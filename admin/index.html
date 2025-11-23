@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>Content Manager - Prashant Baral</title>
 
-    <!-- Netlify Identity Widget -->
+    <!-- Netlify Identity Widget - Load only once -->
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 
     <style>
@@ -16,7 +16,6 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
-        /* Loading screen */
         #loading {
             position: fixed;
             top: 0;
@@ -66,7 +65,6 @@
             font-size: 14px;
         }
 
-        /* Error message */
         #error {
             display: none;
             position: fixed;
@@ -79,6 +77,7 @@
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
             max-width: 500px;
             text-align: center;
+            z-index: 10000;
         }
 
         #error.show {
@@ -108,22 +107,39 @@
             margin: 10px 0;
         }
 
-        #error a {
+        #error button {
             display: inline-block;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+            margin: 5px;
+        }
+
+        #error button:hover {
+            transform: translateY(-2px);
+        }
+
+        #error a {
+            display: inline-block;
+            background: #718096;
             color: white;
             padding: 12px 24px;
             border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
             transition: transform 0.2s;
+            margin: 5px;
         }
 
         #error a:hover {
             transform: translateY(-2px);
         }
 
-        /* Success message */
         .success-banner {
             background: #48bb78;
             color: white;
@@ -131,6 +147,11 @@
             text-align: center;
             font-weight: 600;
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10001;
         }
 
         .success-banner.show {
@@ -139,134 +160,156 @@
     </style>
 </head>
 
-
-
 <body>
     <!-- Loading Screen -->
     <div id="loading">
         <div class="spinner"></div>
         <h2>Loading Content Manager</h2>
-        <p>Please wait...</p>
+        <p>Initializing Netlify CMS...</p>
     </div>
 
     <!-- Error Message -->
     <div id="error">
-        <h3>⚠️ Setup Required</h3>
-        <p>The admin panel is not fully configured yet. Please complete the following steps:</p>
-        <ul>
-            <li>Enable <strong>Netlify Identity</strong> in your site settings</li>
-            <li>Enable <strong>Git Gateway</strong> under Identity → Services</li>
-            <li>Invite yourself as a user from the Identity tab</li>
-            <li>Accept the email invitation to set your password</li>
-        </ul>
-        <p style="margin-top: 25px; font-size: 13px; color: #718096;">
-            Need help? Check the setup guide in your project files.
-        </p>
-        <a href="/" style="margin-top: 10px;">← Back to Home</a>
+        <h3>⚠️ Authentication Required</h3>
+        <p id="errorMessage">Please log in to access the admin panel.</p>
+        <button onclick="retryLogin()">🔐 Login</button>
+        <a href="/">← Back to Home</a>
     </div>
+
+    <!-- Success Banner -->
+    <div id="successBanner" class="success-banner"></div>
 
     <!-- Netlify CMS -->
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
 
     <script>
-        // Check if Netlify Identity is properly configured
-        function checkIdentitySetup() {
-            // Wait for Netlify Identity to load
-            setTimeout(() => {
-                try {
-                    const user = netlifyIdentity.currentUser();
-
-                    if (!user) {
-                        // Not logged in - show login modal
-                        netlifyIdentity.open();
-                    } else {
-                        // User is logged in - hide loading and show CMS
-                        hideLoading();
-                    }
-                } catch (error) {
-                    console.error('Identity check error:', error);
-                    showError();
-                }
-            }, 1000);
-        }
+        let identityInitialized = false;
 
         function hideLoading() {
             const loading = document.getElementById('loading');
             loading.classList.add('hidden');
+            setTimeout(() => {
+                loading.style.display = 'none';
+            }, 500);
         }
 
-        function showError() {
-            document.getElementById('loading').classList.add('hidden');
-            document.getElementById('error').classList.add('show');
+        function showError(message = 'Please log in to access the admin panel.') {
+            hideLoading();
+            const errorDiv = document.getElementById('error');
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = message;
+            errorDiv.classList.add('show');
         }
 
-        // Netlify Identity events
+        function hideError() {
+            document.getElementById('error').classList.remove('show');
+        }
+
+        function retryLogin() {
+            hideError();
+            if (window.netlifyIdentity) {
+                netlifyIdentity.open();
+            } else {
+                showError('Identity widget not loaded. Please refresh the page.');
+            }
+        }
+
+        function showSuccess(message) {
+            const banner = document.getElementById('successBanner');
+            banner.textContent = `✓ ${message}`;
+            banner.classList.add('show');
+            setTimeout(() => {
+                banner.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize Netlify Identity
         if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        hideLoading();
-                        document.location.href = "/admin/";
-                    });
-                } else {
+            console.log('Netlify Identity widget loaded');
+
+            netlifyIdentity.on("init", user => {
+                console.log('Identity initialized. User:', user ? 'logged in' : 'not logged in');
+                identityInitialized = true;
+
+                if (user) {
+                    // User is already logged in
+                    console.log('User authenticated:', user.email);
                     hideLoading();
+                } else {
+                    // User not logged in, show login modal
+                    console.log('User not authenticated, opening login modal');
+                    hideLoading();
+                    setTimeout(() => {
+                        netlifyIdentity.open();
+                    }, 500);
                 }
             });
 
-            window.netlifyIdentity.on("error", err => {
-                console.error("Identity error:", err);
-                showError();
+            netlifyIdentity.on("login", user => {
+                console.log('Login successful:', user.email);
+                hideError();
+                showSuccess('Login successful! Loading CMS...');
+
+                // Reload the page to initialize CMS with authenticated user
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
             });
 
-            // Start the check
-            checkIdentitySetup();
+            netlifyIdentity.on("logout", () => {
+                console.log('User logged out');
+                showSuccess('Logged out successfully');
+
+                // Redirect to home or show login
+                setTimeout(() => {
+                    window.location.href = '/';
+                }, 1500);
+            });
+
+            netlifyIdentity.on("error", err => {
+                console.error('Identity error:', err);
+                showError(`Authentication error: ${err.message || 'Please try again'}`);
+            });
+
+            netlifyIdentity.on("close", () => {
+                console.log('Identity modal closed');
+                const user = netlifyIdentity.currentUser();
+                if (!user && identityInitialized) {
+                    showError('You must log in to access the admin panel.');
+                }
+            });
+
         } else {
-            // Netlify Identity failed to load
-            setTimeout(showError, 2000);
+            console.error('Netlify Identity widget failed to load');
+            setTimeout(() => {
+                showError('Failed to load authentication widget. Please refresh the page.');
+            }, 2000);
         }
 
-        // CMS events
+        // CMS event listeners
         if (window.CMS) {
-            window.CMS.registerEventListener({
+            CMS.registerEventListener({
                 name: 'prePublish',
                 handler: () => {
                     console.log('Publishing content...');
                 }
             });
 
-            window.CMS.registerEventListener({
+            CMS.registerEventListener({
                 name: 'postPublish',
                 handler: () => {
-                    console.log('Content published successfully!');
-                    // Show success message
-                    const banner = document.createElement('div');
-                    banner.className = 'success-banner show';
-                    banner.textContent = '✓ Content published successfully!';
-                    document.body.insertBefore(banner, document.body.firstChild);
-
-                    setTimeout(() => {
-                        banner.classList.remove('show');
-                    }, 3000);
+                    console.log('Content published successfully');
+                    showSuccess('Content published successfully!');
                 }
             });
         }
 
-        // Handle redirects after authentication
-        if (window.location.hash.includes('access_token') || window.location.hash.includes('invite_token')) {
+        // Handle OAuth callbacks
+        if (window.location.hash.includes('access_token') ||
+            window.location.hash.includes('invite_token') ||
+            window.location.hash.includes('recovery_token')) {
+            console.log('Processing authentication token...');
             hideLoading();
-        }
-    </script>
-    <!-- Netlify Identity Widget -->
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/admin/";
-                    });
-                }
-            });
         }
     </script>
 </body>

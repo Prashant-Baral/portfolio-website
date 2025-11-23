@@ -797,27 +797,41 @@
 
     <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
     <script>
+        // Netlify Identity initialization - cleaned up version
         if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
+            netlifyIdentity.on("init", user => {
+                console.log("Identity initialized on main page, user:", user ? "logged in" : "not logged in");
+
+                // If user is not logged in and tries to access admin
                 if (!user) {
-                    window.netlifyIdentity.on("login", () => {
+                    netlifyIdentity.on("login", () => {
+                        console.log("User logged in, redirecting to admin...");
                         document.location.href = "/admin/";
                     });
                 }
             });
-        }
-    </script>
-    <script>
-        if (window.netlifyIdentity) {
-            window.netlifyIdentity.on("init", user => {
-                if (!user) {
-                    window.netlifyIdentity.on("login", () => {
-                        document.location.href = "/admin/";
-                    });
-                }
+
+            // Handle logout on main page
+            netlifyIdentity.on("logout", () => {
+                console.log("User logged out from main page");
+                // Optionally redirect or show message
             });
+
+            // Handle errors
+            netlifyIdentity.on("error", err => {
+                console.error("Identity error on main page:", err);
+            });
+
+            // Auto-open login modal if ?login or #login in URL
+            if (window.location.hash === "#login" ||
+                window.location.search.includes("login")) {
+                netlifyIdentity.open();
+            }
+        } else {
+            console.error("Netlify Identity widget failed to load on main page");
         }
     </script>
+
 </body>
 
 </html>
