@@ -1,0 +1,184 @@
+# Netlify Configuration for Portfolio
+# Complete configuration with all necessary redirects and settings
+
+[build]
+  # Publish directory - root folder since it's a static site
+  publish = "."
+  
+  # No build command needed for static HTML site
+  command = ""
+
+# Enable Netlify Identity (required for admin panel)
+# Must also enable in Netlify Dashboard: Settings → Identity
+[build.environment]
+  NODE_VERSION = "18"
+
+# ============================================
+# ADMIN PANEL ROUTING
+# ============================================
+
+# Admin panel - main route
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+  force = true
+
+# Handle OAuth callback for Netlify Identity
+[[redirects]]
+  from = "/admin/callback"
+  to = "/admin/index.html"
+  status = 200
+
+# ============================================
+# BLOG ROUTING
+# ============================================
+
+# Individual blog posts
+[[redirects]]
+  from = "/blog/:slug"
+  to = "/layouts/blog-post.html?post=:slug"
+  status = 200
+
+# Blog listing
+[[redirects]]
+  from = "/blog"
+  to = "/blogs.html"
+  status = 200
+
+# ============================================
+# PROJECT ROUTING
+# ============================================
+
+# Individual project pages
+[[redirects]]
+  from = "/project/:slug"
+  to = "/layouts/project-detail.html?project=:slug"
+  status = 200
+
+# ============================================
+# CLEAN URLs (optional but recommended)
+# ============================================
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/projects"
+  to = "/projects.html"
+  status = 200
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/portfolio.html"
+  status = 200
+
+[[redirects]]
+  from = "/blogs"
+  to = "/blogs.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+
+# ============================================
+# SECURITY HEADERS
+# ============================================
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Prevent clickjacking
+    X-Frame-Options = "DENY"
+    
+    # Prevent MIME type sniffing
+    X-Content-Type-Options = "nosniff"
+    
+    # Enable XSS protection
+    X-XSS-Protection = "1; mode=block"
+    
+    # Referrer policy
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    
+    # Permissions policy
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Cache static assets
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# ============================================
+# 404 ERROR HANDLING
+# ============================================
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+# ============================================
+# FORM HANDLING (for contact form if needed)
+# ============================================
+
+# Uncomment if you add a contact form
+# [[redirects]]
+#   from = "/contact"
+#   to = "/contact.html"
+#   status = 200
+#   force = false
+#   [redirects.headers]
+#     X-From = "Netlify"
+
+# ============================================
+# PLUGINS (optional but useful)
+# ============================================
+
+# Automatically optimize images
+# Uncomment to enable:
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
+
+# ============================================
+# DEVELOPMENT SETTINGS
+# ============================================
+
+[dev]
+  command = "npx http-server -p 8888"
+  port = 8888
+  publish = "."
+  autoLaunch = true
+
+# ============================================
+# NOTES & INSTRUCTIONS
+# ============================================
+
+# After deploying, you MUST:
+# 1. Go to Netlify Dashboard → Settings → Identity
+# 2. Click "Enable Identity"
+# 3. Under Services, click "Enable Git Gateway"
+# 4. Go to Identity tab → Invite users → Add your email
+# 5. Check your email and accept the invitation
+# 6. Visit https://your-site.netlify.app/admin/ to login
+#
+# Common Issues:
+# - Can't access /admin/: Enable Identity in dashboard
+# - Login not working: Enable Git Gateway
+# - Changes not appearing: Wait 1-2 minutes for rebuild
+#
+# For more help, see the setup guide in your project files.

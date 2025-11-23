@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Blog Post - Prashant Baral</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        .logo-font {
+            font-family: 'Dancing Script', cursive;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            background-image: radial-gradient(ellipse at 50% 50%, rgba(200, 210, 250, 0.2) 0%, transparent 80%), linear-gradient(to bottom, #ffffff 0%, #f0f4f8 100%);
+            background-attachment: fixed;
+        }
+
+        .nav-link-combined {
+            position: relative;
+            color: #475569;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .nav-link-combined::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #3b82f6, #6366f1);
+            transform: scaleX(0);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link-combined:hover {
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .nav-link-combined:hover::after {
+            transform: scaleX(1);
+        }
+
+        /* Blog content styling */
+        .blog-content {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        .blog-content h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 2rem 0 1rem;
+            color: #1e293b;
+        }
+
+        .blog-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 1.75rem 0 1rem;
+            color: #1e293b;
+        }
+
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.5rem 0 0.75rem;
+            color: #334155;
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-content img {
+            width: 100%;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .blog-content code {
+            background: #f1f5f9;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: #e11d48;
+            font-size: 0.9em;
+        }
+
+        .blog-content pre {
+            background: #1e293b;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .blog-content pre code {
+            background: transparent;
+            color: #e2e8f0;
+            padding: 0;
+        }
+
+        .blog-content ul,
+        .blog-content ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #64748b;
+        }
+
+        .blog-content a {
+            color: #3b82f6;
+            text-decoration: underline;
+        }
+
+        .blog-content a:hover {
+            color: #1e40af;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-900 font-sans antialiased overflow-x-hidden">
+    <nav id="nav"
+        class="fixed top-0 left-0 w-full z-[1000] py-3 md:py-4 px-4 md:px-8 bg-white transition-all duration-300 ease-in-out border-b border-slate-200">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="../index.html"
+                class="logo-font font-bold text-3xl italic tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Prashant
+                Baral</a>
+            <ul class="hidden md:flex items-center space-x-8">
+                <li><a href="../about.html" class="nav-link-combined text-sm font-medium">about.</a></li>
+                <li><a href="../projects.html" class="nav-link-combined text-sm font-medium">projects.</a></li>
+                <li><a href="../portfolio.html" class="nav-link-combined text-sm font-medium">portfolio.</a></li>
+                <li><a href="../blogs.html" class="nav-link-combined text-sm font-medium">blogs.</a></li>
+                <li><a href="../contact.html" class="nav-link-combined text-sm font-medium">contact.</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20 px-4 md:px-8">
+        <article class="max-w-4xl mx-auto">
+            <div id="loading" class="text-center py-20">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500">
+                </div>
+                <p class="mt-4 text-slate-600">Loading blog post...</p>
+            </div>
+
+            <div id="blog-content" class="hidden">
+                <div class="mb-8">
+                    <a href="../blogs.html"
+                        class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium mb-6">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Blog
+                    </a>
+                </div>
+
+                <img id="featured-image" class="w-full h-96 object-cover rounded-3xl mb-8 shadow-xl" alt="">
+
+                <div class="flex items-center gap-4 text-sm text-slate-500 mb-6">
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-calendar-alt text-blue-500"></i>
+                        <span id="post-date"></span>
+                    </span>
+                    <span class="flex items-center gap-2">
+                        <i class="fas fa-user text-blue-500"></i>
+                        <span id="post-author"></span>
+                    </span>
+                </div>
+
+                <h1 id="post-title" class="text-5xl font-extrabold text-slate-900 mb-6 leading-tight"></h1>
+
+                <p id="post-excerpt" class="text-xl text-slate-600 mb-8 leading-relaxed"></p>
+
+                <div id="post-tags" class="flex flex-wrap gap-2 mb-10"></div>
+
+                <div id="post-body" class="blog-content prose prose-lg max-w-none"></div>
+
+                <div class="mt-16 pt-8 border-t border-slate-200">
+                    <div class="flex justify-between items-center">
+                        <a href="../blogs.html"
+                            class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+                            <i class="fas fa-arrow-left"></i> All Posts
+                        </a>
+                        <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                            class="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 font-medium">
+                            <i class="fas fa-arrow-up"></i> Back to Top
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="error-content" class="hidden text-center py-20">
+                <i class="fas fa-exclamation-circle text-6xl text-red-500 mb-4"></i>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Blog Post Not Found</h2>
+                <p class="text-slate-600 mb-8">Sorry, we couldn't find the blog post you're looking for.</p>
+                <a href="../blogs.html"
+                    class="inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full font-medium hover:bg-blue-700">
+                    <i class="fas fa-arrow-left"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <footer class="bg-white text-slate-600 border-t border-slate-200 py-6 px-8">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-sm">&copy; 2024 Prashant Baral. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        async function loadBlogPost() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postSlug = urlParams.get('post');
+
+            if (!postSlug) {
+                showError();
+                return;
+            }
+
+            try {
+                const response = await fetch(`../content/blog/${postSlug}.md`);
+                if (!response.ok) throw new Error('Post not found');
+
+                const markdown = await response.text();
+                const { frontmatter, content } = parseFrontmatter(markdown);
+
+                // Update page title
+                document.getElementById('page-title').textContent = `${frontmatter.title} - Prashant Baral`;
+
+                // Display content
+                document.getElementById('post-title').textContent = frontmatter.title;
+                document.getElementById('post-excerpt').textContent = frontmatter.excerpt;
+                document.getElementById('post-author').textContent = frontmatter.author || 'Prashant Baral';
+
+                const date = new Date(frontmatter.date);
+                document.getElementById('post-date').textContent = date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                // Featured image
+                const featuredImage = document.getElementById('featured-image');
+                if (frontmatter.image) {
+                    featuredImage.src = frontmatter.image;
+                    featuredImage.alt = frontmatter.title;
+                } else {
+                    featuredImage.remove();
+                }
+
+                // Tags
+                const tagsContainer = document.getElementById('post-tags');
+                if (frontmatter.tags && frontmatter.tags.length > 0) {
+                    tagsContainer.innerHTML = frontmatter.tags.map(tag =>
+                        `<span class="text-sm font-medium text-blue-600 bg-blue-100 rounded-full px-4 py-2">${tag}</span>`
+                    ).join('');
+                }
+
+                // Body content
+                document.getElementById('post-body').innerHTML = marked.parse(content);
+
+                // Show content, hide loading
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('blog-content').classList.remove('hidden');
+
+            } catch (error) {
+                console.error('Error loading blog post:', error);
+                showError();
+            }
+        }
+
+        function showError() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('error-content').classList.remove('hidden');
+        }
+
+        function parseFrontmatter(markdown) {
+            const match = markdown.match(/^---\n([\s\S]+?)\n---\n([\s\S]*)$/);
+            if (!match) return { frontmatter: {}, content: markdown };
+
+            const frontmatterText = match[1];
+            const content = match[2];
+            const frontmatter = {};
+
+            frontmatterText.split('\n').forEach(line => {
+                const colonIndex = line.indexOf(':');
+                if (colonIndex > -1) {
+                    const key = line.substring(0, colonIndex).trim();
+                    let value = line.substring(colonIndex + 1).trim();
+                    value = value.replace(/^["']|["']$/g, '');
+
+                    if (value.startsWith('[') && value.endsWith(']')) {
+                        value = value.slice(1, -1).split(',').map(v => v.trim().replace(/^["']|["']$/g, ''));
+                    }
+
+                    frontmatter[key] = value;
+                }
+            });
+
+            return { frontmatter, content };
+        }
+
+        window.addEventListener('load', loadBlogPost);
+    </script>
+</body>
+
+</html>

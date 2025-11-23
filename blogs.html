@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Prashant Baral</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .logo-font {
+            font-family: 'Dancing Script', cursive;
+            padding-right: 10px;
+        }
+
+        @keyframes moveOrb {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            25% {
+                transform: translate(-60%, -40%) scale(1.1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+
+            75% {
+                transform: translate(-40%, -60%) scale(1.1);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .hero-orb-animated {
+            animation: moveOrb 25s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .shimmer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -30;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.05) 1px, transparent 1.5px);
+            background-size: 20px 20px;
+            animation: shimmer 60s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        body {
+            background-color: #f1f5f9;
+            background-image: radial-gradient(ellipse at 50% 50%, rgba(200, 210, 250, 0.2) 0%, transparent 80%), linear-gradient(to bottom, #ffffff 0%, #f0f4f8 100%);
+            background-attachment: fixed;
+        }
+
+        @keyframes slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-up-1 {
+            animation: slide-up 0.6s ease-out forwards;
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .animate-slide-up-2 {
+            animation: slide-up 0.6s ease-out forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+
+        .nav-link-combined {
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease-in-out;
+            color: #475569;
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.7), 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .nav-link-combined::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #3b82f6, #6366f1);
+            transform: scaleX(0);
+            transform-origin: bottom left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link-combined:hover {
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .nav-link-combined:hover::after {
+            transform: scaleX(1);
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-900 font-sans antialiased overflow-x-hidden">
+    <div class="shimmer-overlay"></div>
+
+    <nav id="nav"
+        class="fixed top-0 left-0 w-full z-[1000] py-3 md:py-4 px-4 md:px-8 bg-white transition-all duration-300 ease-in-out border-b border-slate-200">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html"
+                class="logo-font font-bold text-3xl italic tracking-tight transition-transform duration-200 ease-in-out bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Prashant
+                Baral</a>
+            <ul class="hidden md:flex items-center space-x-8">
+                <li><a href="about.html" class="nav-link-combined text-sm font-medium">about.</a></li>
+                <li><a href="projects.html" class="nav-link-combined text-sm font-medium">projects.</a></li>
+                <li><a href="portfolio.html" class="nav-link-combined text-sm font-medium">portfolio.</a></li>
+                <li><a href="blogs.html" class="nav-link-combined text-sm font-medium">blogs.</a></li>
+                <li><a href="contact.html" class="nav-link-combined text-sm font-medium">contact.</a></li>
+            </ul>
+            <div class="md:hidden flex flex-col space-y-1 cursor-pointer p-2 mobile-menu-toggle">
+                <span class="w-6 h-0.5 bg-slate-900 transition-all duration-300 ease-in-out rounded"></span>
+                <span class="w-6 h-0.5 bg-slate-900 transition-all duration-300 ease-in-out rounded"></span>
+                <span class="w-6 h-0.5 bg-slate-900 transition-all duration-300 ease-in-out rounded"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="min-h-screen py-32 px-4 md:px-8 relative overflow-hidden hero-section">
+            <div class="absolute inset-0 -z-20"></div>
+            <div class="absolute inset-0 -z-10 opacity-60">
+                <div class="absolute w-full h-full animate-pulse-slow">
+                    <div class="absolute w-80 h-80 rounded-full bg-blue-500/20 blur-3xl -top-1/4 left-1/4"></div>
+                    <div class="absolute w-96 h-96 rounded-full bg-indigo-500/20 blur-3xl -bottom-1/4 right-1/4"></div>
+                </div>
+            </div>
+            <div class="absolute inset-0 -z-10 bg-no-repeat bg-cover opacity-10 hero-pattern-animated"></div>
+            <div
+                class="absolute inset-0 -z-10 w-[800px] h-[800px] bg-radial-gradient-blur opacity-10 hero-orb-animated">
+            </div>
+
+            <div class="max-w-6xl mx-auto relative z-10 text-center">
+                <div class="text-center mb-16">
+                    <h1
+                        class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 leading-tight tracking-tight mb-4 animate-slide-up-1">
+                        <span
+                            class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500">My
+                            Blog</span>
+                    </h1>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed animate-slide-up-2">
+                        A space where I share my thoughts on technology, system design, and the latest trends in
+                        software development.
+                    </p>
+                </div>
+
+                <div id="blog-posts-container"
+                    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 animate-fade-in-up">
+                    <div class="col-span-full text-center py-10">
+                        <div
+                            class="inline-block animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4">
+                        </div>
+                        <p class="text-slate-600">Loading blog posts...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white text-slate-600 border-t border-slate-200 py-4 md:py-6 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+            <a href="index.html"
+                class="logo-font font-bold text-3xl italic tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">Prashant
+                Baral</a>
+            <div class="flex space-x-3 md:space-x-4 mb-4">
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="LinkedIn"><i class="fab fa-linkedin-in text-base"></i></a>
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="GitHub"><i class="fab fa-github text-base"></i></a>
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="Dribbble"><i class="fab fa-dribbble text-base"></i></a>
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="Twitter"><i class="fab fa-twitter text-base"></i></a>
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="Instagram"><i class="fab fa-instagram text-base"></i></a>
+            </div>
+            <p class="text-sm mt-2">&copy; 2024 Prashant Baral. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        async function loadBlogPosts() {
+            const container = document.getElementById('blog-posts-container');
+
+            try {
+                const knownPosts = ['fastapi-vs-flask.md', 'redis-caching.md', 'microservices.md'];
+                const existingPosts = [];
+
+                for (const filename of knownPosts) {
+                    try {
+                        const response = await fetch(`content/blog/${filename}`);
+                        if (response.ok) existingPosts.push(filename);
+                    } catch (e) {
+                        // Post doesn't exist, skip it
+                    }
+                }
+
+                if (existingPosts.length === 0) {
+                    // Show clean empty state without "add post" button
+                    container.innerHTML = `
+                        <div class="col-span-full text-center py-20">
+                            <i class="fas fa-pen-fancy text-6xl text-slate-300 mb-6"></i>
+                            <h3 class="text-2xl font-bold text-slate-700 mb-3">Coming Soon</h3>
+                            <p class="text-slate-500 text-lg">Blog posts will be published here soon. Stay tuned!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const posts = await Promise.all(
+                    existingPosts.map(async filename => {
+                        try {
+                            const res = await fetch(`content/blog/${filename}`);
+                            const markdown = await res.text();
+                            const { frontmatter } = parseFrontmatter(markdown);
+
+                            if (frontmatter.published === 'false' || frontmatter.published === false) {
+                                return null;
+                            }
+
+                            return { ...frontmatter, slug: filename.replace('.md', '') };
+                        } catch (e) {
+                            return null;
+                        }
+                    })
+                );
+
+                const validPosts = posts.filter(p => p !== null);
+
+                if (validPosts.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-span-full text-center py-20">
+                            <i class="fas fa-pen-fancy text-6xl text-slate-300 mb-6"></i>
+                            <h3 class="text-2xl font-bold text-slate-700 mb-3">Coming Soon</h3>
+                            <p class="text-slate-500 text-lg">Blog posts will be published here soon. Stay tuned!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                validPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                container.innerHTML = validPosts.map(post => createBlogCard(post)).join('');
+
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-20">
+                        <i class="fas fa-pen-fancy text-6xl text-slate-300 mb-6"></i>
+                        <h3 class="text-2xl font-bold text-slate-700 mb-3">Coming Soon</h3>
+                        <p class="text-slate-500 text-lg">Blog posts will be published here soon. Stay tuned!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function createBlogCard(post) {
+            const date = new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            const image = post.image || 'https://placehold.co/800x600/E2E8F0/1A202C?text=Blog+Post';
+            const tags = post.tags || [];
+
+            return `
+                <div class="group bg-white rounded-3xl shadow-xl hover:shadow-2xl overflow-hidden transform transition-all duration-300 ease-in-out hover:-translate-y-2">
+                    <div class="overflow-hidden">
+                        <img src="${image}" alt="${post.title}" class="w-full h-40 object-cover transition-all duration-300 ease-in-out group-hover:scale-110">
+                    </div>
+                    <div class="p-6 text-left">
+                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-2">
+                            <i class="fas fa-calendar-alt text-purple-500"></i>
+                            <span>${date}</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-slate-900 mb-2">${post.title}</h3>
+                        <p class="text-sm text-slate-600 leading-snug mb-4">${post.excerpt}</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${tags.map(tag => `<span class="text-xs font-medium text-blue-600 bg-blue-100 rounded-full px-3 py-1 hover:bg-blue-200 transition-colors duration-200">${tag}</span>`).join('')}
+                        </div>
+                        <a href="layouts/blog-post.html?post=${post.slug}" class="inline-flex items-center gap-2 text-white bg-blue-600 px-6 py-2 rounded-full font-medium transition-all duration-300 ease-in-out hover:bg-blue-700 hover:gap-3">
+                            Read More
+                            <span class="transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function parseFrontmatter(markdown) {
+            const match = markdown.match(/^---\n([\s\S]+?)\n---\n([\s\S]*)$/);
+            if (!match) return { frontmatter: {}, content: markdown };
+
+            const frontmatterText = match[1];
+            const content = match[2];
+            const frontmatter = {};
+
+            frontmatterText.split('\n').forEach(line => {
+                const colonIndex = line.indexOf(':');
+                if (colonIndex > -1) {
+                    const key = line.substring(0, colonIndex).trim();
+                    let value = line.substring(colonIndex + 1).trim();
+                    value = value.replace(/^["']|["']$/g, '');
+
+                    if (value.startsWith('[') && value.endsWith(']')) {
+                        value = value.slice(1, -1).split(',').map(v => v.trim().replace(/^["']|["']$/g, ''));
+                    }
+
+                    frontmatter[key] = value;
+                }
+            });
+
+            return { frontmatter, content };
+        }
+
+        window.addEventListener('load', loadBlogPosts);
+
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+        });
+    </script>
+</body>
+
+</html>

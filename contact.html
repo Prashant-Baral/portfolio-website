@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Prashant Baral</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .logo-font {
+            font-family: 'Dancing Script', cursive;
+            padding-right: 10px;
+        }
+
+        @keyframes moveOrb {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            25% {
+                transform: translate(-60%, -40%) scale(1.1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+
+            75% {
+                transform: translate(-40%, -60%) scale(1.1);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .hero-orb-animated {
+            animation: moveOrb 25s infinite cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .shimmer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -30;
+            background-image: radial-gradient(circle, rgba(0, 0, 0, 0.05) 1px, transparent 1.5px);
+            background-size: 20px 20px;
+            animation: shimmer 60s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        body {
+            background-color: #f1f5f9;
+            background-image:
+                radial-gradient(ellipse at 50% 50%, rgba(200, 210, 250, 0.2) 0%, transparent 80%),
+                linear-gradient(to bottom, #ffffff 0%, #f0f4f8 100%);
+            background-attachment: fixed;
+        }
+
+        @keyframes slide-up {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-slide-up-1 {
+            animation: slide-up 0.6s ease-out forwards;
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .animate-slide-up-2 {
+            animation: slide-up 0.6s ease-out forwards;
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+
+        .nav-link-combined {
+            position: relative;
+            display: inline-block;
+            transition: all 0.3s ease-in-out;
+            color: #475569;
+            text-shadow: 0 0 8px rgba(59, 130, 246, 0.7),
+                0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .nav-link-combined::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, #3b82f6, #6366f1);
+            transform: scaleX(0);
+            transform-origin: bottom left;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .nav-link-combined:hover {
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .nav-link-combined:hover::after {
+            transform: scaleX(1);
+        }
+
+        .btn-hover-effect {
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        .btn-hover-effect:hover {
+            background-color: #48a363;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-slate-900 font-sans antialiased overflow-x-hidden">
+    <div class="shimmer-overlay"></div>
+
+    <nav id="nav"
+        class="fixed top-0 left-0 w-full z-[1000] py-3 md:py-4 px-4 md:px-8 bg-white transition-all duration-300 ease-in-out border-b border-slate-200">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a href="index.html"
+                class="logo-font font-bold text-3xl italic tracking-tight transition-transform duration-200 ease-in-out bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent ">Prashant
+                Baral</a>
+            <ul class="hidden md:flex items-center space-x-8">
+                <li><a href="about.html" class="nav-link-combined text-sm font-medium">about.</a></li>
+                <li><a href="projects.html" class="nav-link-combined text-sm font-medium">projects.</a></li>
+                <li><a href="portfolio.html" class="nav-link-combined text-sm font-medium">portfolio.</a></li>
+                <li><a href="blogs.html" class="nav-link-combined text-sm font-medium">blogs.</a></li>
+                <li><a href="contact.html" class="nav-link-combined text-sm font-medium">contact.</a></li>
+            </ul>
+            <div class="md:hidden flex flex-col space-y-1 cursor-pointer p-2 mobile-menu-toggle">
+                <span class="w-6 h-0.5 bg-slate-900 transition-all duration-300 ease-in-out rounded"></span>
+                <span class="w-6 h-0.5 bg-slate-900 transition-all duration-300 ease-in-out rounded"></span>
+                <span class="w-6 h-0.5 bg-slate-900 transition-all duration-300 ease-in-out rounded"></span>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="min-h-screen py-32 px-4 md:px-8 relative overflow-hidden text-center hero-section">
+            <div class="absolute inset-0 -z-20"></div>
+            <div class="absolute inset-0 -z-10 opacity-60">
+                <div class="absolute w-full h-full animate-pulse-slow">
+                    <div class="absolute w-80 h-80 rounded-full bg-blue-500/20 blur-3xl -top-1/4 left-1/4"></div>
+                    <div class="absolute w-96 h-96 rounded-full bg-indigo-500/20 blur-3xl -bottom-1/4 right-1/4"></div>
+                    <div class="absolute w-72 h-72 rounded-full bg-emerald-500/10 blur-3xl top-1/2 left-3/4"></div>
+                </div>
+            </div>
+            <div class="absolute inset-0 -z-10 bg-no-repeat bg-cover opacity-10 hero-pattern-animated"></div>
+            <div
+                class="absolute inset-0 -z-10 w-[800px] h-[800px] bg-radial-gradient-blur opacity-10 hero-orb-animated">
+            </div>
+
+            <div class="max-w-4xl w-full mx-auto relative z-10 flex flex-col items-center">
+                <div class="text-center mb-12 animate-slide-up-1">
+                    <h1
+                        class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 leading-tight tracking-tight mb-4">
+                        <span
+                            class="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-cyan-500 to-sky-500">Get
+                            In Touch</span>
+                    </h1>
+                    <p class="text-lg text-gray-700 max-w-2xl mx-auto leading-relaxed animate-slide-up-2">
+                        Have a question, a project idea, or just want to connect? Feel free to reach out. I'd love to
+                        hear from
+                        you.
+                    </p>
+                </div>
+
+                <div
+                    class="w-full max-w-full mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 lg:gap-8 rounded-3xl overflow-hidden shadow-xl animate-fade-in-up transform transition-transform duration-300 hover:scale-[1.01]">
+
+                    <div class="bg-white/80 backdrop-blur-md p-8 lg:p-12">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-6 text-left">Send a Message</h2>
+                        <form name="contact" method="POST" data-netlify="true" class="space-y-6 text-left">
+                            <!-- Required hidden input for Netlify -->
+                            <input type="hidden" name="form-name" value="contact">
+
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                <input type="text" id="name" name="name" placeholder="John Doe" required
+                                    class="block w-full rounded-lg border-2 border-gray-300 p-3 bg-gray-50 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200">
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email
+                                    Address</label>
+                                <input type="email" id="email" name="email" placeholder="you@example.com" required
+                                    class="block w-full rounded-lg border-2 border-gray-300 p-3 bg-gray-50 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200">
+                            </div>
+
+                            <div>
+                                <label for="message"
+                                    class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea id="message" name="message" rows="5" placeholder="Your message here..."
+                                    required
+                                    class="block w-full rounded-lg border-2 border-gray-300 p-3 bg-gray-50 text-gray-900 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors duration-200"></textarea>
+                            </div>
+
+                            <div class="flex justify-start">
+                                <button type="submit"
+                                    class="btn-hover-effect group px-8 py-4 rounded-full font-semibold border border-gray-300 text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200 shadow-lg relative overflow-hidden">
+                                    <span class="relative z-10 flex items-center justify-center">
+                                        <i
+                                            class="fas fa-paper-plane mr-2 transform transition-transform duration-300 group-hover:translate-x-1"></i>
+                                        Send Message
+                                    </span>
+                                </button>
+                            </div>
+                        </form>
+
+                    </div>
+
+                    <div
+                        class="bg-slate-50/80 backdrop-blur-sm p-8 lg:p-12 flex flex-col justify-center items-center lg:items-start text-center lg:text-left rounded-r-3xl">
+                        <h2 class="text-3xl font-bold text-slate-900 mb-4">Connect With Me</h2>
+                        <p class="text-lg text-slate-600 mb-8 max-w-sm">
+                            Feel free to reach out to me on any of these platforms for a quicker response.
+                        </p>
+                        <div class="flex justify-center lg:justify-start gap-8 text-3xl">
+                            <a href="https://linkedin.com" target="_blank"
+                                class="text-[#0077B5] hover:opacity-80 transition-opacity duration-200 transform hover:scale-110"
+                                aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="https://github.com" target="_blank"
+                                class="text-[#181717] hover:opacity-80 transition-opacity duration-200 transform hover:scale-110"
+                                aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="https://twitter.com" target="_blank"
+                                class="text-[#1DA1F2] hover:opacity-80 transition-opacity duration-200 transform hover:scale-110"
+                                aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="mailto:youremail@example.com"
+                                class="text-[#EA4335] hover:opacity-80 transition-opacity duration-200 transform hover:scale-110"
+                                aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-white text-slate-600 border-t border-slate-200 py-4 md:py-6 px-4 md:px-8">
+        <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+            <a href="index.html"
+                class="logo-font font-bold text-3xl italic tracking-tight bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent mb-4">Prashant
+                Baral</a>
+            <div class="flex space-x-3 md:space-x-4 mb-4">
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="LinkedIn"><i class="fab fa-linkedin-in text-base"></i></a>
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="GitHub"><i class="fab fa-github text-base"></i></a>
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="Dribbble"><i class="fab fa-dribbble text-base"></i></a>
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="Twitter"><i class="fab fa-twitter text-base"></i></a>
+                <a href="#"
+                    class="w-9 h-9 flex items-center justify-center bg-slate-100 hover:bg-blue-600 text-slate-500 hover:text-white rounded-xl transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105"
+                    aria-label="Instagram"><i class="fab fa-instagram text-base"></i></a>
+            </div>
+            <p class="text-sm mt-2">&copy; 2024 Prashant Baral. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const nav = document.getElementById('nav');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            mobileMenuToggle.classList.toggle('active');
+            if (navLinks) {
+                navLinks.classList.toggle('active');
+            }
+        });
+
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+
+</html>

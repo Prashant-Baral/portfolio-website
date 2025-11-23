@@ -1,0 +1,49 @@
+{
+    "name": "prashant-baral-portfolio",
+    "version": "1.0.0",
+    "description": "Personal portfolio website with integrated blog and projects management using Netlify CMS",
+    "main": "index.html",
+    "scripts": {
+        "start": "npx http-server -p 8000 -c-1",
+        "dev": "npx http-server -p 8000 -o -c-1",
+        "serve": "npx http-server -p 8000 -c-1",
+        "build": "echo 'Static site - no build needed'",
+        "deploy": "netlify deploy --prod",
+        "deploy:preview": "netlify deploy",
+        "clean": "rm -rf .cache node_modules",
+        "validate": "echo 'Running validation...' && node scripts/validate.js",
+        "generate-index": "node scripts/generate-content-index.js"
+    },
+    "keywords": [
+        "portfolio",
+        "blog",
+        "netlify-cms",
+        "static-site",
+        "personal-website",
+        "web-development",
+        "projects"
+    ],
+    "author": {
+        "name": "Prashant Baral",
+        "email": "your.email@example.com",
+        "url": "https://your-portfolio-url.netlify.app"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/yourusername/your-portfolio.git"
+    },
+    "homepage": "https://your-portfolio-url.netlify.app",
+    "devDependencies": {
+        "http-server": "^14.1.1"
+    },
+    "dependencies": {},
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">=9.0.0"
+    },
+    "browserslist": [
+        "defaults",
+        "not IE 11"
+    ]
+}

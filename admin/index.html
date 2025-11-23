@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Content Manager - Prashant Baral</title>
+
+    <!-- Netlify Identity Widget -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        }
+
+        /* Loading screen */
+        #loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            transition: opacity 0.5s ease-out;
+        }
+
+        #loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loading h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        #loading p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        /* Error message */
+        #error {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            text-align: center;
+        }
+
+        #error.show {
+            display: block;
+        }
+
+        #error h3 {
+            color: #e53e3e;
+            margin: 0 0 15px;
+            font-size: 22px;
+        }
+
+        #error p {
+            color: #4a5568;
+            margin: 0 0 20px;
+            line-height: 1.6;
+        }
+
+        #error ul {
+            text-align: left;
+            margin: 20px 0;
+            padding-left: 20px;
+            color: #4a5568;
+        }
+
+        #error li {
+            margin: 10px 0;
+        }
+
+        #error a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        #error a:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Success message */
+        .success-banner {
+            background: #48bb78;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .success-banner.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <h2>Loading Content Manager</h2>
+        <p>Please wait...</p>
+    </div>
+
+    <!-- Error Message -->
+    <div id="error">
+        <h3>⚠️ Setup Required</h3>
+        <p>The admin panel is not fully configured yet. Please complete the following steps:</p>
+        <ul>
+            <li>Enable <strong>Netlify Identity</strong> in your site settings</li>
+            <li>Enable <strong>Git Gateway</strong> under Identity → Services</li>
+            <li>Invite yourself as a user from the Identity tab</li>
+            <li>Accept the email invitation to set your password</li>
+        </ul>
+        <p style="margin-top: 25px; font-size: 13px; color: #718096;">
+            Need help? Check the setup guide in your project files.
+        </p>
+        <a href="/" style="margin-top: 10px;">← Back to Home</a>
+    </div>
+
+    <!-- Netlify CMS -->
+    <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+
+    <script>
+        // Check if Netlify Identity is properly configured
+        function checkIdentitySetup() {
+            // Wait for Netlify Identity to load
+            setTimeout(() => {
+                try {
+                    const user = netlifyIdentity.currentUser();
+
+                    if (!user) {
+                        // Not logged in - show login modal
+                        netlifyIdentity.open();
+                    } else {
+                        // User is logged in - hide loading and show CMS
+                        hideLoading();
+                    }
+                } catch (error) {
+                    console.error('Identity check error:', error);
+                    showError();
+                }
+            }, 1000);
+        }
+
+        function hideLoading() {
+            const loading = document.getElementById('loading');
+            loading.classList.add('hidden');
+        }
+
+        function showError() {
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('error').classList.add('show');
+        }
+
+        // Netlify Identity events
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        hideLoading();
+                        document.location.href = "/admin/";
+                    });
+                } else {
+                    hideLoading();
+                }
+            });
+
+            window.netlifyIdentity.on("error", err => {
+                console.error("Identity error:", err);
+                showError();
+            });
+
+            // Start the check
+            checkIdentitySetup();
+        } else {
+            // Netlify Identity failed to load
+            setTimeout(showError, 2000);
+        }
+
+        // CMS events
+        if (window.CMS) {
+            window.CMS.registerEventListener({
+                name: 'prePublish',
+                handler: () => {
+                    console.log('Publishing content...');
+                }
+            });
+
+            window.CMS.registerEventListener({
+                name: 'postPublish',
+                handler: () => {
+                    console.log('Content published successfully!');
+                    // Show success message
+                    const banner = document.createElement('div');
+                    banner.className = 'success-banner show';
+                    banner.textContent = '✓ Content published successfully!';
+                    document.body.insertBefore(banner, document.body.firstChild);
+
+                    setTimeout(() => {
+                        banner.classList.remove('show');
+                    }, 3000);
+                }
+            });
+        }
+
+        // Handle redirects after authentication
+        if (window.location.hash.includes('access_token') || window.location.hash.includes('invite_token')) {
+            hideLoading();
+        }
+    </script>
+</body>
+
+</html>
