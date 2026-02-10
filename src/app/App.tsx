@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { Header } from './components/Header';
 import { Home } from './components/pages/Home';
+import { Skills } from './components/pages/Skills';
 import { Projects } from './components/pages/Projects';
-import { Blog } from './components/pages/Blog';
-import { About } from './components/pages/About';
+import { Certifications } from './components/pages/Certifications';
+import { Achievements } from './components/pages/Achievements';
+import { Resume } from './components/pages/Resume';
 import { Contact } from './components/pages/Contact';
 import { FooterApis } from './components/FooterApis';
 
-type Page = 'home' | 'projects' | 'blog' | 'about' | 'contact';
+type Page = 'home' | 'skills' | 'projects' | 'certifications' | 'achievements' | 'resume' | 'contact';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
@@ -15,17 +17,21 @@ export default function App() {
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return <Home onNavigate={(page) => setCurrentPage(page as Page)} />; // ← FIXED: Pass onNavigate
+        return <Home onNavigate={(page) => setCurrentPage(page as Page)} />;
+      case 'skills':
+        return <Skills />;
       case 'projects':
         return <Projects />;
-      case 'blog':
-        return <Blog />;
-      case 'about':
-        return <About />;
+      case 'certifications':
+        return <Certifications />;
+      case 'achievements':
+        return <Achievements />;
+      case 'resume':
+        return <Resume />;
       case 'contact':
         return <Contact />;
       default:
-        return <Home onNavigate={(page) => setCurrentPage(page as Page)} />; // ← FIXED: Pass onNavigate
+        return <Home onNavigate={(page) => setCurrentPage(page as Page)} />;
     }
   };
 

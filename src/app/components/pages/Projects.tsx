@@ -91,27 +91,6 @@ const projects: Project[] = [
     tags: ['Excel', 'Data Analysis', 'Pivot Tables', 'Data Visualization'],
     github: 'https://github.com/Prashant-Baral/Electric-Vehicle-insights-Dashboard',
     dataset: "https://catalog.data.gov/dataset/electric-vehicle-population-data"
-  },
-  {
-    title: "Portfolio Website",
-    description:
-      "Personal portfolio showcashing projects, blogs, and experience.",
-    tags: ["Figma", "Web Design", "Netlify"],
-    github: "https://github.com/Prashant-Baral/portfolio-website",
-    demo: "https://baralprashant.com.np/",
-  },
-  {
-    title: 'Global Air Quality Analysis',
-    description: 'Data analysis pipeline examining worldwide air pollution patterns using WHO data. Includes statistical modeling, temporal trend analysis, correlation studies, and regional comparisons of PM2.5, PM10, and NO2 levels.',
-    tags: ['Python', 'Pandas', 'Matplotlib', 'Scikit-learn', 'Data Analysis'],
-    github: 'https://github.com/Prashant-Baral/WHO-Air-Quality-Data-Analysis-Project',
-  },
-  {
-    title: 'Grevinox - AI Complaint Portal',
-    description: 'AI-powered complaint redressal system using Google Gemini to transform informal complaints into professional, well-structured statements.It was my fiirst in web dev, so it is not structured well.',
-    tags: ['Python', 'Django', 'Google Gemini', 'SQLite', 'HTML/CSS'],
-    github: 'https://github.com/Akshatageek/Grevonix',
-
   }
 
 ];
@@ -176,7 +155,7 @@ export function Projects() {
                     href={project.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-3.5 py-2 bg-[#FF6B6B] text-white rounded-lg hover:bg-black transition-all text-sm"
+                    className="flex items-center gap-1.5 px-3.5 py-2 bg-[#47c584] text-white rounded-lg hover:bg-black transition-all text-sm"
                   >
                     <ExternalLink className="w-4 h-4" />
                     Live
