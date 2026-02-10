@@ -80,25 +80,25 @@ interface SkillCategory {
 const skillCategories: SkillCategory[] = [
     {
         title: 'Programming Languages',
-        icon: <Code className="w-5 h-5" />,
+        icon: <Code className="w-6 h-6" />,
         skills: ['Python', 'Cpp', 'SQL', 'Java', 'HTML/CSS'],
         iconBg: 'bg-blue-600',
     },
     {
         title: 'Data Science & ML',
-        icon: <BarChart className="w-5 h-5" />,
+        icon: <BarChart className="w-6 h-6" />,
         skills: ['NumPy', 'Pandas', 'Matplotlib', 'Scikit-learn', 'Excel', 'Power BI'],
         iconBg: 'bg-orange-600',
     },
     {
         title: 'Backend & Databases',
-        icon: <Database className="w-5 h-5" />,
+        icon: <Database className="w-6 h-6" />,
         skills: ['FastAPI', 'PostgreSQL', 'SQLAlchemy', 'Pydantic'],
         iconBg: 'bg-purple-600',
     },
     {
         title: 'Tools & DevOps',
-        icon: <Wrench className="w-5 h-5" />,
+        icon: <Wrench className="w-6 h-6" />,
         skills: ['Git', 'GitHub', 'Docker', 'Netlify'],
         iconBg: 'bg-teal-600',
     },
@@ -108,35 +108,35 @@ export function Skills() {
     return (
         <main className="flex-1 overflow-auto">
             <div className="max-w-[1200px] mx-auto px-7 py-10">
-                {/* Header */}
+                {/* Header - Matching Projects style */}
                 <div className="mb-10">
                     <h1 className="text-4xl mb-3">Skills</h1>
                     <p className="text-gray-600 text-base">
-                        Technical skills across various domains
+                        Technical skills and tools I work with across various domains
                     </p>
                 </div>
 
-                {/* Skills Grid */}
+                {/* Skills Grid - Matching Projects card design */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {skillCategories.map((category, index) => (
                         <div
                             key={index}
-                            className="border border-gray-200 rounded-xl p-6 hover:border-black transition-all duration-300"
+                            className="border border-gray-200 rounded-xl p-6 hover:border-black transition-all duration-300 bg-gradient-to-br from-white to-gray-50/30"
                         >
                             {/* Category Header */}
                             <div className="flex items-center gap-3 mb-5">
-                                <div className={`w-10 h-10 ${category.iconBg} rounded-lg flex items-center justify-center text-white`}>
+                                <div className={`w-12 h-12 ${category.iconBg} rounded-xl flex items-center justify-center text-white shadow-md`}>
                                     {category.icon}
                                 </div>
                                 <h2 className="text-xl font-semibold">{category.title}</h2>
                             </div>
 
-                            {/* Skills with Logos */}
+                            {/* Skills with Logos - Matching Projects tag style */}
                             <div className="flex flex-wrap gap-2">
                                 {category.skills.map((skill, i) => (
                                     <div
                                         key={i}
-                                        className={`flex items-center gap-2 px-3 py-2 rounded-full ${getTagColor(skill)} transition-transform duration-200 hover:scale-105`}
+                                        className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm ${getTagColor(skill)} transition-all duration-200 hover:scale-105 hover:shadow-md cursor-default`}
                                     >
                                         <img
                                             src={skillLogos[skill]}
@@ -147,7 +147,7 @@ export function Skills() {
                                                 target.style.display = 'none';
                                             }}
                                         />
-                                        <span className="text-sm font-medium">{skill}</span>
+                                        <span className="font-medium">{skill}</span>
                                     </div>
                                 ))}
                             </div>

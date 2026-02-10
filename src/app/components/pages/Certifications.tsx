@@ -110,7 +110,7 @@ export function Certifications() {
                         <div
                             key={cert.id}
                             onClick={() => setSelectedCertificate(cert)}
-                            className="group cursor-pointer border-2 border-gray-200 rounded-xl overflow-hidden hover:border-purple-500 hover:shadow-lg transition-all duration-300"
+                            className="group cursor-pointer border border-gray-200 rounded-xl overflow-hidden hover:border-purple-500 hover:shadow-lg transition-all duration-300"
                         >
                             {/* Certificate Image Preview */}
                             <div className="relative h-40 bg-gradient-to-br from-gray-100 to-gray-50 overflow-hidden">
@@ -161,36 +161,36 @@ export function Certifications() {
                 </div>
             </div>
 
-            {/* Certificate Modal */}
+            {/* Certificate Modal - Compact Design */}
             {selectedCertificate && (
                 <div
-                    className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4"
+                    className="fixed inset-0 backdrop-blur-[2px] flex items-center justify-center p-4 z-50"
                     onClick={() => setSelectedCertificate(null)}
                 >
                     <div
-                        className="relative bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-auto"
+                        className="bg-white rounded-2xl max-w-2xl w-full relative shadow-2xl border border-gray-200"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Close button */}
+                        {/* Mac-style Close Button */}
                         <button
                             onClick={() => setSelectedCertificate(null)}
-                            className="absolute top-4 right-4 w-10 h-10 bg-red-500 hover:bg-red-600 text-white rounded-full flex items-center justify-center z-10 transition-all duration-300 hover:scale-110"
+                            className="absolute top-4 left-4 w-3 h-3 bg-red-500 rounded-full hover:bg-red-600 transition-all z-10 shadow-md flex items-center justify-center"
                         >
-                            <X className="w-5 h-5" />
+                            <X className="w-2 h-2 text-white" strokeWidth={3} />
                         </button>
 
                         {/* Certificate content */}
                         <div className="p-6">
-                            <div className="mb-4">
-                                <h2 className="text-2xl font-bold mb-2">{selectedCertificate.title}</h2>
-                                <p className="text-gray-600">{selectedCertificate.issuer} • {selectedCertificate.date}</p>
+                            <div className="mb-4 pl-6">
+                                <h2 className="text-xl font-bold mb-1">{selectedCertificate.title}</h2>
+                                <p className="text-sm text-gray-600">{selectedCertificate.issuer} • {selectedCertificate.date}</p>
                             </div>
 
                             {/* Certificate Image */}
                             <img
                                 src={selectedCertificate.image}
                                 alt={selectedCertificate.title}
-                                className="w-full h-auto rounded-xl border-2 border-gray-200"
+                                className="w-full h-auto rounded-xl border border-gray-200"
                                 onError={(e) => {
                                     e.currentTarget.src = 'https://via.placeholder.com/800x600?text=Certificate+Image';
                                 }}
@@ -198,15 +198,15 @@ export function Certifications() {
 
                             {/* Verify Link */}
                             {selectedCertificate.verifyLink && (
-                                <div className="mt-4">
+                                <div className="mt-4 flex justify-center">
                                     <a
                                         href={selectedCertificate.verifyLink}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-300"
+                                        className="inline-flex items-center gap-2 px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg transition-all duration-300 text-sm"
                                     >
-                                        Verify Certificate
                                         <ExternalLink className="w-4 h-4" />
+                                        Verify Certificate
                                     </a>
                                 </div>
                             )}

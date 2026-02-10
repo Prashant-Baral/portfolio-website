@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
-import { BarChart3 } from 'lucide-react';
+import { BarChart3, Terminal } from 'lucide-react';
 
-export function FooterApis() {
+interface FooterApisProps {
+  onOpenTerminal: () => void;
+}
+
+export function FooterApis({ onOpenTerminal }: FooterApisProps) {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -24,7 +28,7 @@ export function FooterApis() {
             <span>All systems operational</span>
           </div>
 
-          {/* Right: Time + Analytics */}
+          {/* Right: Time + Terminal + Analytics */}
           <div className="flex items-center gap-2.5">
             <div className="flex items-center gap-1.5">
               <span>
@@ -37,6 +41,18 @@ export function FooterApis() {
               <span className="text-xs text-gray-400">NPT</span>
             </div>
 
+            {/* Terminal Button */}
+            <button
+              onClick={onOpenTerminal}
+              className="relative group w-6 h-6 rounded-full border border-gray-300 hover:border-black hover:bg-black hover:text-white transition-all duration-300 flex items-center justify-center"
+            >
+              <Terminal className="w-3 h-3" />
+              <span className="absolute bottom-full right-0 mb-2 px-2 py-1 bg-black text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                Terminal
+              </span>
+            </button>
+
+            {/* Analytics Button */}
             <a
               href="https://cloud.umami.is/analytics/eu/share/w3OTIP9hQIi0PNfT"
               target="_blank"

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Header } from './components/Header';
+import { Terminal } from './components/pages/Terminal';
 import { Home } from './components/pages/Home';
 import { Skills } from './components/pages/Skills';
 import { Projects } from './components/pages/Projects';
@@ -11,7 +12,8 @@ import { FooterApis } from './components/FooterApis';
 type Page = 'home' | 'skills' | 'projects' | 'certifications' | 'achievements' | 'resume' | 'contact';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('home');
+  const [currentPage, setCurrentPage] = useState('home');
+  const [showTerminal, setShowTerminal] = useState(false);
 
   const renderPage = () => {
     switch (currentPage) {
@@ -40,8 +42,11 @@ export default function App() {
       {/* Main Content - Pages */}
       {renderPage()}
 
-      {/* Footer */}
-      <FooterApis />
+      {/* Footer with Terminal button */}
+      <FooterApis onOpenTerminal={() => setShowTerminal(true)} />
+
+      {/* Terminal Modal */}
+      {showTerminal && <Terminal onClose={() => setShowTerminal(false)} />}
     </div>
   );
 }
