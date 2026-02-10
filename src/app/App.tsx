@@ -4,7 +4,6 @@ import { Home } from './components/pages/Home';
 import { Skills } from './components/pages/Skills';
 import { Projects } from './components/pages/Projects';
 import { Certifications } from './components/pages/Certifications';
-import { Achievements } from './components/pages/Achievements';
 import { Resume } from './components/pages/Resume';
 import { Contact } from './components/pages/Contact';
 import { FooterApis } from './components/FooterApis';
@@ -24,8 +23,6 @@ export default function App() {
         return <Projects />;
       case 'certifications':
         return <Certifications />;
-      case 'achievements':
-        return <Achievements />;
       case 'resume':
         return <Resume />;
       case 'contact':
