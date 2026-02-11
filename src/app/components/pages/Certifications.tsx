@@ -164,7 +164,7 @@ export function Certifications() {
             {/* Certificate Modal - Compact Design */}
             {selectedCertificate && (
                 <div
-                    className="fixed inset-0 backdrop-blur-[2px] flex items-center justify-center p-4 z-50"
+                    className="fixed inset-0 backdrop-blur-[4px] flex items-center justify-center p-4 z-50"
                     onClick={() => setSelectedCertificate(null)}
                 >
                     <div

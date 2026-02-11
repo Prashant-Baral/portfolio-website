@@ -149,7 +149,7 @@ export function Resume() {
                                     <h3 className="text-xl font-bold mb-1">Summer Training</h3>
                                     <p className="text-blue-600 mb-2 font-mono text-xs flex items-center gap-1.5">
                                         <Calendar className="w-3 h-3" />
-                                        Angaar Batch • Jun/July-2024
+                                        W3grads (Angaar Batch) • Jun/July-2024
                                     </p>
                                     <p className="text-gray-700 text-sm">
                                         Developed backend features using Django MVT, implementing authentication,

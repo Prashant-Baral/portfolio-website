@@ -1,5 +1,5 @@
-import { Terminal as TerminalIcon, X, Minus, Circle } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { Terminal as TerminalIcon } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 
 interface TerminalProps {
     onClose: () => void;
@@ -164,17 +164,36 @@ export function Terminal({ onClose }: TerminalProps) {
         },
     ]);
     const [currentInput, setCurrentInput] = useState('');
+    const [isVisible, setIsVisible] = useState(false);
     const terminalRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
+    // Smooth entrance animation
     useEffect(() => {
-        inputRef.current?.focus();
+        requestAnimationFrame(() => {
+            setIsVisible(true);
+        });
+    }, []);
+
+    // Auto-scroll with smooth behavior
+    useEffect(() => {
         if (terminalRef.current) {
-            terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+            terminalRef.current.scrollTo({
+                top: terminalRef.current.scrollHeight,
+                behavior: 'smooth'
+            });
         }
     }, [history]);
 
-    const handleCommand = (cmd: string) => {
+    // Keep input focused
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            inputRef.current?.focus();
+        }, 100);
+        return () => clearTimeout(timer);
+    }, [history]);
+
+    const handleCommand = useCallback((cmd: string) => {
         const trimmedCmd = cmd.trim().toLowerCase();
 
         if (trimmedCmd === 'clear') {
@@ -195,60 +214,83 @@ export function Terminal({ onClose }: TerminalProps) {
             ];
         }
 
-        setHistory([...history, { input: cmd, output }]);
-    };
+        setHistory(prev => [...prev, { input: cmd, output }]);
+    }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = useCallback((e: React.FormEvent) => {
         e.preventDefault();
-        handleCommand(currentInput);
-        setCurrentInput('');
-    };
+        if (currentInput.trim()) {
+            handleCommand(currentInput);
+            setCurrentInput('');
+        }
+    }, [currentInput, handleCommand]);
 
-    const handleTerminalClick = () => {
+    const handleTerminalClick = useCallback(() => {
         inputRef.current?.focus();
-    };
+    }, []);
+
+    const handleClose = useCallback(() => {
+        setIsVisible(false);
+        setTimeout(onClose, 200);
+    }, [onClose]);
 
     return (
-        <div className="fixed inset-0 backdrop-blur-[2px] flex items-center justify-center p-4 z-50">
+        <div
+            className={`fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity duration-200 ${isVisible ? 'opacity-100' : 'opacity-0'
+                }`}
+            onClick={handleClose}
+        >
             <div
-                className="bg-gray-900 rounded-2xl w-full max-w-3xl shadow-2xl border border-gray-700 overflow-hidden"
+                className={`bg-gray-900 rounded-xl w-full max-w-3xl shadow-2xl border border-gray-700/50 overflow-hidden transform transition-all duration-200 ${isVisible ? 'scale-100 opacity-100' : 'scale-95 opacity-0'
+                    }`}
                 onClick={(e) => e.stopPropagation()}
             >
-                {/* Terminal Header - Mac Style */}
-                <div className="bg-gray-800 px-4 py-3 flex items-center justify-between border-b border-gray-700">
+                {/* Terminal Header */}
+                <div className="bg-gray-800/90 px-4 py-3 flex items-center justify-between border-b border-gray-700/50 backdrop-blur-sm">
                     <div className="flex items-center gap-2">
                         <button
-                            onClick={onClose}
-                            className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-600 transition-all"
+                            onClick={handleClose}
+                            className="w-3 h-3 bg-red-500 rounded-full hover:bg-red-600 transition-colors duration-150 active:scale-95"
+                            aria-label="Close terminal"
                         />
-                        <button className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-600 transition-all" />
-                        <button className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-600 transition-all" />
+                        <button
+                            className="w-3 h-3 bg-yellow-500 rounded-full hover:bg-yellow-600 transition-colors duration-150 active:scale-95"
+                            aria-label="Minimize"
+                        />
+                        <button
+                            className="w-3 h-3 bg-green-500 rounded-full hover:bg-green-600 transition-colors duration-150 active:scale-95"
+                            aria-label="Maximize"
+                        />
                     </div>
-                    <div className="flex items-center gap-2 text-gray-400 text-sm">
+                    <div className="flex items-center gap-2 text-gray-400 text-sm select-none">
                         <TerminalIcon className="w-4 h-4" />
                         <span>terminal</span>
                     </div>
-                    <div className="w-16" /> {/* Spacer for centering */}
+                    <div className="w-16" />
                 </div>
 
                 {/* Terminal Body */}
                 <div
                     ref={terminalRef}
                     onClick={handleTerminalClick}
-                    className="bg-gray-900 text-green-400 font-mono text-sm p-6 h-[500px] overflow-y-auto cursor-text"
+                    className="bg-gray-950 text-green-400 font-mono text-sm p-6 h-[500px] overflow-y-auto cursor-text scroll-smooth overscroll-contain"
+                    style={{
+                        scrollbarWidth: 'thin',
+                        scrollbarColor: '#4b5563 transparent'
+                    }}
                 >
                     {/* Command History */}
                     {history.map((cmd, i) => (
-                        <div key={i} className="mb-4">
+                        <div key={i} className="mb-4 animate-in fade-in duration-150">
                             {cmd.input && (
                                 <div className="flex items-center gap-2 mb-1">
-                                    <span className="text-blue-400">➜</span>
-                                    <span className="text-purple-400">~</span>
+                                    <span className="text-blue-400 select-none">➜</span>
+                                    <span className="text-purple-400 select-none">~</span>
                                     <span className="text-white">{cmd.input}</span>
                                 </div>
                             )}
                             {cmd.output.map((line, j) => (
-                                <div key={j} className="text-gray-300 pl-6">
+                                <div key={j} className="text-gray-300 pl-6 leading-relaxed">
                                     {line}
                                 </div>
                             ))}
@@ -257,19 +299,57 @@ export function Terminal({ onClose }: TerminalProps) {
 
                     {/* Current Input */}
                     <form onSubmit={handleSubmit} className="flex items-center gap-2">
-                        <span className="text-blue-400">➜</span>
-                        <span className="text-purple-400">~</span>
+                        <span className="text-blue-400 select-none">➜</span>
+                        <span className="text-purple-400 select-none">~</span>
                         <input
                             ref={inputRef}
                             type="text"
                             value={currentInput}
                             onChange={(e) => setCurrentInput(e.target.value)}
                             className="flex-1 bg-transparent outline-none text-white caret-green-400"
-                            autoFocus
+                            spellCheck="false"
+                            autoComplete="off"
+                            autoCorrect="off"
+                            autoCapitalize="off"
                         />
                     </form>
                 </div>
             </div>
+
+            <style>{`
+                @keyframes fade-in {
+                    from {
+                        opacity: 0;
+                        transform: translateY(-4px);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateY(0);
+                    }
+                }
+                
+                .animate-in {
+                    animation: fade-in 150ms ease-out;
+                }
+
+                /* Custom scrollbar for webkit browsers */
+                div::-webkit-scrollbar {
+                    width: 8px;
+                }
+                
+                div::-webkit-scrollbar-track {
+                    background: transparent;
+                }
+                
+                div::-webkit-scrollbar-thumb {
+                    background: #4b5563;
+                    border-radius: 4px;
+                }
+                
+                div::-webkit-scrollbar-thumb:hover {
+                    background: #6b7280;
+                }
+            `}</style>
         </div>
     );
 }

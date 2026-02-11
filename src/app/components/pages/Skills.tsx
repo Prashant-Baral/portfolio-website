@@ -33,6 +33,7 @@ const tagColors: Record<string, string> = {
     "HTML/CSS": "bg-indigo-100 text-indigo-700",
     Netlify: "bg-indigo-100 text-indigo-700",
     Render: "bg-teal-100 text-teal-700",
+
 };
 
 const getTagColor = (tag: string) => tagColors[tag] || "bg-gray-100 text-gray-700";
@@ -93,13 +94,13 @@ const skillCategories: SkillCategory[] = [
     {
         title: 'Backend & Databases',
         icon: <Database className="w-6 h-6" />,
-        skills: ['FastAPI', 'PostgreSQL', 'SQLAlchemy', 'Pydantic'],
+        skills: ['FastAPI', 'PostgreSQL', 'SQLAlchemy', 'Pydantic', 'Django', 'SQLite'],
         iconBg: 'bg-purple-600',
     },
     {
         title: 'Tools & DevOps',
         icon: <Wrench className="w-6 h-6" />,
-        skills: ['Git', 'GitHub', 'Docker', 'Netlify'],
+        skills: ['Git', 'GitHub', 'Docker', 'Netlify', 'Figma'],
         iconBg: 'bg-teal-600',
     },
 ];
@@ -107,7 +108,7 @@ const skillCategories: SkillCategory[] = [
 export function Skills() {
     return (
         <main className="flex-1 overflow-auto">
-            <div className="max-w-[1200px] mx-auto px-7 py-10">
+            <div className="max-w-[1100px] mx-auto px-7 py-10">
                 {/* Header - Matching Projects style */}
                 <div className="mb-10">
                     <h1 className="text-4xl mb-3">Skills</h1>
